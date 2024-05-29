@@ -13,4 +13,5 @@ public:
 	static int randPosY();
 	static void colocarPersonaje(char mapa[WIDTH][HEIGHT], Personaje& personaje, char icono);
 	static void inicioJuego();
+	static void finalJuego(int pHp);
 };

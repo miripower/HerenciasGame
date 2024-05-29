@@ -56,3 +56,25 @@ void Juego::inicioJuego() {
 	system("pause");
 	system("cls");
 }
+
+void Juego::finalJuego(int pHp)
+{
+	if (pHp > 0)
+	{
+		std::cout << " __     ______  _    _  __          _______ _   _ " << std::endl;
+		std::cout << " \\ \\   / / __ \\| |  | | \\ \\        / /_   _| \\ | |" << std::endl;
+		std::cout << "  \\ \\_/ / |  | | |  | |  \\ \\  /\\  / /  | | |  \\| |" << std::endl;
+		std::cout << "   \\   /| |  | | |  | |   \\ \\/  \\/ /   | | | . ` |" << std::endl;
+		std::cout << "    | | | |__| | |__| |    \\  /\\  /   _| |_| |\\  |" << std::endl;
+		std::cout << "    |_|  \\____/ \\____/      \\/  \\/   |_____|_| \\_|" << std::endl;
+	}
+	else
+	{
+		std::cout << " __     ______  _    _   _      ____   _____ ______ " << std::endl;
+		std::cout << " \\ \\   / / __ \\| |  | | | |    / __ \\ / ____|  ____|" << std::endl;
+		std::cout << "  \\ \\_/ / |  | | |  | | | |   | |  | | (___ | |__   " << std::endl;
+		std::cout << "   \\   /| |  | | |  | | | |   | |  | |\\___ \\|  __|  " << std::endl;
+		std::cout << "    | | | |__| | |__| | | |___| |__| |____) | |____ " << std::endl;
+		std::cout << "    |_|  \\____/ \\____/  |______\\____/|_____/|______|" << std::endl;
+	}
+}
