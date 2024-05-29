@@ -18,7 +18,4 @@ public:
 	//Setters:
 	void setFireAttack(int pFireAttack);
 	void setFrozenAttack(int pFrozenAttack);
-
-	//Metodos:
-	int realizarAtaque();
 };
