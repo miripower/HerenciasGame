@@ -22,6 +22,10 @@ Personaje::Personaje(int pHp, int pAttack, std::string pName, int pPositionX, in
 
 int Personaje::getHp()
 {
+    if (hp < 0)
+    {
+        setHp(0);
+    }
     return hp;
 }
 

@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Personaje.h"
 #include "EnemigoFinal.h"
+#include "Juego.h"
 
 #define BLACK   "\x1B[30m"
 #define RED     "\x1b[31m"
@@ -17,97 +18,38 @@
 #define GRAY    "\x1B[38;2;176;174;174m"
 #define RESET   "\x1b[0m"
 
-const int WIDTH = 10;
-const int HEIGHT = 20;
-
-void iniciarMapa(char mapa[WIDTH][HEIGHT]) {
-	for (int i = 0; i < WIDTH; i++) {
-		for (int j = 0; j < HEIGHT; j++) {
-			mapa[i][j] = '-';
-		}
-	}
-}
-
-void mostrarMapa(char mapa[WIDTH][HEIGHT]) {
-	for (int i = 0; i < WIDTH; i++) {
-		for (int j = 0; j < HEIGHT; j++) {
-			std::cout << mapa[i][j];
-		}
-		std::cout << std::endl;
-	}
-}
-
-int randPosX() {
-	int randX = rand() % WIDTH;
-	return randX;
-}
-
-int randPosY() {
-	int randY = rand() % HEIGHT;
-	return randY;
-}
-
-void colocarPersonaje(char mapa[WIDTH][HEIGHT], Personaje& personaje, char icono) {
-	int posX = personaje.getPositionX();
-	int posY = personaje.getPositionY();
-	mapa[posX][posY] = icono;
-}
-
-void inicioJuego() {
-	std::cout << "  _    _ ______ _____  ______ _   _  _____ _____           _____ " << std::endl;
-	std::cout << " | |  | |  ____|  __ \\|  ____| \\ | |/ ____|_   _|   /\\    / ____|" << std::endl;
-	std::cout << " | |__| | |__  | |__) | |__  |  \\| | |      | |    /  \\  | (___  " << std::endl;
-	std::cout << " |  __  |  __| |  _  /|  __| | . ` | |      | |   / /\\ \\  \\___ \\ " << std::endl;
-	std::cout << " | |  | | |____| | \\ \\| |____| |\\  | |____ _| |_ / ____ \\ ____) |" << std::endl;
-	std::cout << " |_|__|_|______|_|__\\_\\______|_| \\_|\\_____|_____/_/    \\_\\_____/ " << std::endl;
-	std::cout << "  / ____|   /\\   |  \\/  |  ____|                                 " << std::endl;
-	std::cout << " | |  __   /  \\  | \\  / | |__                                    " << std::endl;
-	std::cout << " | | |_ | / /\\ \\ | |\\/| |  __|                                   " << std::endl;
-	std::cout << " | |__| |/ ____ \\| |  | | |____                                  " << std::endl;
-	std::cout << "  \\_____/_/    \\_\\_|_ |_|______|_  __ _          _               " << std::endl;
-	std::cout << " | |           |  __ \\    | | |  \\/  (_)        | |              " << std::endl;
-	std::cout << " | |__  _   _  | |__) |__ | | | \\  / |_ _ __ ___| |_             " << std::endl;
-	std::cout << " | '_ \\| | | | |  ___/ _ \\| | | |\\/| | | '__/ _ \\ __|            " << std::endl;
-	std::cout << " | |_) | |_| | | |  | (_) | | | |  | | | | |  __/ |_             " << std::endl;
-	std::cout << " |_.__/ \\__, | |_|   \\___/|_| |_|  |_|_|_|  \\___|\\__|            " << std::endl;
-	std::cout << "         __/ |                                                   " << std::endl;
-	std::cout << "        |___/                                                    " << std::endl;
-	system("pause");
-	system("cls");
-}
-
 int main()
 {
     srand(time(NULL));
-	inicioJuego();
+	Juego::inicioJuego();
 	char mapa[WIDTH][HEIGHT];
-	iniciarMapa(mapa);
+	Juego::iniciarMapa(mapa);
 
 	Personaje Player = Personaje(300, 20, "Mario", 0, 7);
 
 	Personaje Enemigo[4] = {
-		Personaje(50, 10, "Koopa Troopa", randPosX(), randPosY()),
-		Personaje(50, 10, "Goomba", randPosX(), randPosY()),
-		Personaje(50, 10, "Lakitu", randPosX(), randPosY()),
-		Personaje(50, 10, "Piranha Plant", randPosX(), randPosY())
+		Personaje(50, 10, "Koopa Troopa", Juego::randPosX(), Juego::randPosY()),
+		Personaje(50, 10, "Goomba", Juego::randPosX(), Juego::randPosY()),
+		Personaje(50, 10, "Lakitu", Juego::randPosX(), Juego::randPosY()),
+		Personaje(50, 10, "Piranha Plant", Juego::randPosX(), Juego::randPosY())
 	};
 
-	EnemigoFinal FinalEnemy = EnemigoFinal(150, 30, "Bowser", WIDTH - 1, randPosY(), 50, 40);
+	EnemigoFinal FinalEnemy = EnemigoFinal(150, 30, "Bowser", WIDTH - 1, Juego::randPosY(), 50, 40);
 
 	while (Player.getHp() > 0 && FinalEnemy.getHp() > 0)
 	{
 		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), { 0,0 });
 		Player.move(WIDTH, HEIGHT);
-		iniciarMapa(mapa);
-		colocarPersonaje(mapa, Player, '0');
-		colocarPersonaje(mapa, FinalEnemy, 'S');
+		Juego::iniciarMapa(mapa);
+		Juego::colocarPersonaje(mapa, Player, '0');
+		Juego::colocarPersonaje(mapa, FinalEnemy, '-');
 
 		for (int i = 0; i < 4; i++)
 		{
-			colocarPersonaje(mapa, Enemigo[i], 'E');
+			Juego::colocarPersonaje(mapa, Enemigo[i], '-');
 		}
 
-		mostrarMapa(mapa);
+		Juego::mostrarMapa(mapa);
 
 		Sleep(1);
 		std::pair<int, int> playerPos = Player.getPosition();
